@@ -90,7 +90,7 @@ public class Scene1 extends JPanel {
     private int lastRowToShow;
     private int firstRowToShow;
 
-    private static final int FADE_START_FRAME = 100;
+    private static final int FADE_START_FRAME = 600;
     private static final int FADE_DURATION_FRAMES = 120; // black to white
     private static final int RED_FADE_START_FRAME = 1000;
     private static final int RED_FADE_DURATION_FRAMES = 120; // white to red
@@ -357,17 +357,6 @@ public class Scene1 extends JPanel {
         } else {
             bgColor = Color.red;
         }
-
-        // if (frame > FADE_START_FRAME + FADE_DURATION_FRAMES && frame < FADE_START_FRAME_2) {
-        //     bgColor = Color.white;
-        // } else if (frame < FADE_START_FRAME_2 + FADE_DURATION_FRAMES) {
-        //     // Calculate fade progress (0.0 to 1.0)
-        //     float progress = (frame - FADE_START_FRAME_2) / (float) FADE_DURATION_FRAMES;
-        //     int value = (int)(255 * progress);
-        //     bgColor = new Color(value, value, value);
-        // } else {
-        //     bgColor = Color.red; 
-        // }
 
         g.setColor(bgColor);
         g.fillRect(0, 0, d.width, d.height);

@@ -7,6 +7,9 @@ public class Enemy extends Sprite {
 
     // private Bomb bomb;
 
+    private int animationFrame = 0;
+    private static final int ANIMATION_SPEED = 10; // frames per image
+
     public Enemy(int x, int y) {
 
         initEnemy(x, y);
@@ -28,9 +31,29 @@ public class Enemy extends Sprite {
         setImage(scaledImage);
     }
 
-    public void act(int direction) {
+    private void setEnemyImage(String imgPath) {
+        var ii = new ImageIcon(imgPath);
+        var scaledImage = ii.getImage().getScaledInstance(ii.getIconWidth() * SCALE_FACTOR,
+                ii.getIconHeight() * SCALE_FACTOR,
+                java.awt.Image.SCALE_SMOOTH);
+        setImage(scaledImage);
+    }
 
-        this.x += direction;
+    @Override
+    public void act() {
+        act(0);
+    }
+
+    public void act(int direction) {
+        this.y += 1; // Move down by 1 pixel per frame
+
+        // Animate enemy spaceship
+        animationFrame = (animationFrame + 1) % (ANIMATION_SPEED * 2);
+        if (animationFrame < ANIMATION_SPEED) {
+            setEnemyImage(IMG_ENEMY);
+        } else {
+            setEnemyImage(IMG_ENEMY_2);
+        }
     }
 /* 
     public Bomb getBomb() {

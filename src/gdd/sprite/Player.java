@@ -14,21 +14,25 @@ public class Player extends Sprite {
 
     private Rectangle bounds = new Rectangle(175,135,17,32);
 
+    private int animationFrame = 0;
+    private static final int ANIMATION_SPEED = 10; // frames per image
+
     public Player() {
         initPlayer();
     }
 
     private void initPlayer() {
-        var ii = new ImageIcon(IMG_PLAYER);
+        setPlayerImage(IMG_PLAYER);
+        setX(START_X);
+        setY(START_Y);
+    }
 
-        // Scale the image to use the global scaling factor
+    private void setPlayerImage(String imgPath) {
+        var ii = new ImageIcon(imgPath);
         var scaledImage = ii.getImage().getScaledInstance(ii.getIconWidth() * SCALE_FACTOR,
                 ii.getIconHeight() * SCALE_FACTOR,
                 java.awt.Image.SCALE_SMOOTH);
         setImage(scaledImage);
-
-        setX(START_X);
-        setY(START_Y);
     }
 
     public int getSpeed() {
@@ -43,8 +47,17 @@ public class Player extends Sprite {
         return currentSpeed;
     }
 
+    @Override
     public void act() {
         x += dx;
+
+        // Animate spaceship
+        animationFrame = (animationFrame + 1) % (ANIMATION_SPEED * 2);
+        if (animationFrame < ANIMATION_SPEED) {
+            setPlayerImage(IMG_PLAYER);
+        } else {
+            setPlayerImage(IMG_PLAYER_2);
+        }
 
         if (x <= 2) {
             x = 2;

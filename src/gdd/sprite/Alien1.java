@@ -28,7 +28,9 @@ public class Alien1 extends Enemy {
         setImage(scaledImage);
     }
 
+    @Override
     public void act(int direction) {
+        super.act(direction);
         this.y ++;
     }
 
@@ -56,6 +58,11 @@ public class Alien1 extends Enemy {
             var bombImg = "src/images/bomb.png";
             var ii = new ImageIcon(bombImg);
             setImage(ii.getImage());
+        }
+
+        @Override
+        public void act() {
+            // No action needed for Bomb by default
         }
 
         public void setDestroyed(boolean destroyed) {
