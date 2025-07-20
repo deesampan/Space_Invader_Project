@@ -110,8 +110,19 @@ public class Scene1 extends JPanel {
     private void loadSpawnDetails() {
         // TODO load this from a file
         spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
-        spawnMap.put(200, new SpawnDetails("Alien1", 200, 0));
-        spawnMap.put(300, new SpawnDetails("Alien1", 300, 0));
+
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        }
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        }
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(300 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        }
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        }
 
         spawnMap.put(400, new SpawnDetails("Alien1", 400, 0));
         spawnMap.put(401, new SpawnDetails("Alien1", 450, 0));
