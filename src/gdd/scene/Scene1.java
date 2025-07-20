@@ -90,6 +90,9 @@ public class Scene1 extends JPanel {
     private int lastRowToShow;
     private int firstRowToShow;
 
+    private static final int FADE_START_FRAME = 600;
+    private static final int FADE_DURATION_FRAMES = 30; // 2 seconds at 60 FPS
+
     public Scene1(Game game) {
         this.game = game;
         // initBoard();
@@ -124,15 +127,13 @@ public class Scene1 extends JPanel {
             spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
         }
 
-        spawnMap.put(400, new SpawnDetails("Alien1", 400, 0));
-        spawnMap.put(401, new SpawnDetails("Alien1", 450, 0));
-        spawnMap.put(402, new SpawnDetails("Alien1", 500, 0));
-        spawnMap.put(403, new SpawnDetails("Alien1", 550, 0));
 
-        spawnMap.put(500, new SpawnDetails("Alien1", 100, 0));
-        spawnMap.put(501, new SpawnDetails("Alien1", 150, 0));
-        spawnMap.put(502, new SpawnDetails("Alien1", 200, 0));
-        spawnMap.put(503, new SpawnDetails("Alien1", 350, 0));
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.err.println(j);
+                spawnMap.put(600+ (i*40) + j, new SpawnDetails("Alien1", 100 + (j * 60), 0));
+            }
+        }
     }
 
     private void initBoard() {
@@ -334,13 +335,18 @@ public class Scene1 extends JPanel {
     }
 
     private void doDrawing(Graphics g) {
-
-        // Change background color to white after 10 seconds (600 frames)
-        if (frame >= 600) {
-            g.setColor(Color.white);
+        Color bgColor;
+        if (frame < FADE_START_FRAME) {
+            bgColor = Color.black;
+        } else if (frame < FADE_START_FRAME + FADE_DURATION_FRAMES) {
+            // Calculate fade progress (0.0 to 1.0)
+            float progress = (frame - FADE_START_FRAME) / (float) FADE_DURATION_FRAMES;
+            int value = (int)(255 * progress);
+            bgColor = new Color(value, value, value);
         } else {
-            g.setColor(Color.black);
+            bgColor = Color.white;
         }
+        g.setColor(bgColor);
         g.fillRect(0, 0, d.width, d.height);
 
         g.setColor(Color.white);
