@@ -143,7 +143,7 @@ public class Scene1 extends JPanel {
         addKeyListener(new TAdapter());
         setFocusable(true);
         requestFocusInWindow();
-        setBackground(Color.black);
+        setBackground(Color.white);
 
         timer = new Timer(1000 / 60, new GameCycle());
         timer.start();
@@ -335,7 +335,12 @@ public class Scene1 extends JPanel {
 
     private void doDrawing(Graphics g) {
 
-        g.setColor(Color.black);
+        // Change background color to white after 10 seconds (600 frames)
+        if (frame >= 600) {
+            g.setColor(Color.white);
+        } else {
+            g.setColor(Color.black);
+        }
         g.fillRect(0, 0, d.width, d.height);
 
         g.setColor(Color.white);

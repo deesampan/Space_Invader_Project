@@ -22,7 +22,7 @@ public class Global {
     public static final int ALIEN_GAP = 30; // Gap between aliens
 
     public static final int GO_DOWN = 30; // Doubled from 15
-    public static final int NUMBER_OF_ALIENS_TO_DESTROY = 24;
+    public static final int NUMBER_OF_ALIENS_TO_DESTROY = 100;
     public static final int CHANCE = 5;
     public static final int DELAY = 17;
     public static final int PLAYER_WIDTH = 30; // Doubled from 15
@@ -33,6 +33,6 @@ public class Global {
     public static final String IMG_PLAYER = "src/images/player.png";
     public static final String IMG_SHOT = "src/images/shot.png";
     public static final String IMG_EXPLOSION = "src/images/explosion.png";
-    public static final String IMG_TITLE = "src/images/title.png";
+    public static final String IMG_TITLE = "src/images/title_2.png";
     public static final String IMG_POWERUP_SPEEDUP = "src/images/powerup-s.png";
 }
