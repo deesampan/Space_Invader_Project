@@ -28,6 +28,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.awt.Image;
 
 public class Scene1 extends JPanel {
 
@@ -100,6 +101,9 @@ public class Scene1 extends JPanel {
 
     private int bossWinTimer = -1;
 
+    private Image winImage = new ImageIcon("src/images/win.png").getImage();
+    private Image lossImage = new ImageIcon("src/images/loss.png").getImage();
+
     public Scene1(Game game) {
         this.game = game;
         // initBoard();
@@ -120,8 +124,8 @@ public class Scene1 extends JPanel {
     private void loadSpawnDetails() {
         // TODO load this from a file
         spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
-        // spawnMap.put(120, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
-        spawnMap.put(100, new SpawnDetails("ZigZagEnemy", 200, 0)); // ZigZagEnemy spawns at frame 160
+        spawnMap.put(60, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        // spawnMap.put(100, new SpawnDetails("ZigZagEnemy", 200, 0)); // ZigZagEnemy spawns at frame 160
 
         // for (int i = 0; i < 10; i++) {
         //     spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
@@ -393,22 +397,24 @@ public class Scene1 extends JPanel {
     }
 
     private void gameOver(Graphics g) {
-
         g.setColor(Color.black);
         g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
 
-        g.setColor(new Color(0, 32, 48));
-        g.fillRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
+        Image imgToShow = null;
+        if ("Game won!".equals(message)) {
+            imgToShow = winImage;
+        } else {
+            imgToShow = lossImage;
+        }
+        if (imgToShow != null) {
+            g.drawImage(imgToShow, 0, 0, BOARD_WIDTH, BOARD_HEIGHT, this);
+        }
+        // Optionally, still show the message as overlay text
         g.setColor(Color.white);
-        g.drawRect(50, BOARD_WIDTH / 2 - 30, BOARD_WIDTH - 100, 50);
-
-        var small = new Font("Helvetica", Font.BOLD, 14);
+        var small = new Font("Helvetica", Font.BOLD, 32);
         var fontMetrics = this.getFontMetrics(small);
-
-        g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(message, (BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,
-                BOARD_WIDTH / 2);
+        g.drawString(message, (BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
     }
 
     private void update() {
@@ -483,7 +489,7 @@ public class Scene1 extends JPanel {
                         boss.resetShootCooldown();
                     }
                 }
-                // Player-enemy collision
+                // Player-enemy collision (do not damage boss here)
                 int playerX = player.getX();
                 int playerY = player.getY();
                 int enemyX = enemy.getX();
@@ -496,6 +502,7 @@ public class Scene1 extends JPanel {
                     var ii = new ImageIcon(IMG_EXPLOSION);
                     player.setImage(ii.getImage());
                     player.setDying(true);
+                    // Do NOT damage boss here
                 }
             }
         }

@@ -1,7 +1,9 @@
 package gdd.sprite;
 
 import static gdd.Global.*;
+import static gdd.Global.BOARD_WIDTH;
 import javax.swing.ImageIcon;
+import java.awt.Rectangle;
 
 public class BossEnemy extends Enemy {
     private int health;
@@ -10,10 +12,14 @@ public class BossEnemy extends Enemy {
     private int direction = 1; // 1 for right, -1 for left
     private int shootCooldown = 0;
     private static final int SHOOT_INTERVAL = 40; // frames between shots
+    private static final int HITBOX_MARGIN = 40; // Amount to expand hitbox (centered)
+    private int spawnX, spawnY; // Store initial spawn for correct image placement
 
     public BossEnemy(int x, int y) {
         super(x, y);
         this.health = 3; // Boss has 3 HP
+        this.spawnX = x;
+        this.spawnY = y;
         setBossImage();
     }
 
@@ -24,10 +30,6 @@ public class BossEnemy extends Enemy {
             ii.getIconHeight() * SCALE_FACTOR * 2,
             java.awt.Image.SCALE_SMOOTH);
         setImage(scaledImage);
-
-
-        this.x = x - (scaledImage.getWidth(null) / 2);
-        this.y = y - (scaledImage.getHeight(null) / 2);
     }
 
     @Override
@@ -41,16 +43,19 @@ public class BossEnemy extends Enemy {
             x = BOARD_WIDTH - BORDER_RIGHT - getImage().getWidth(null);
             direction = -1;
         }
+
         // Animate boss spaceship
         animationFrame = (animationFrame + 1) % (ANIMATION_SPEED * 2);
         setBossImage();
-        // Handle shooting
+
+        // Handle shooting cooldown
         if (shootCooldown > 0) shootCooldown--;
     }
 
     public boolean canShoot() {
         return shootCooldown == 0;
     }
+
     public void resetShootCooldown() {
         shootCooldown = SHOOT_INTERVAL;
     }
@@ -73,18 +78,13 @@ public class BossEnemy extends Enemy {
         return health;
     }
 
-    @Override
-    public int getX() {
-        return x - 50; // expand hitbox left
+    // ✅ NEW hitbox method (use this for collision detection)
+    public Rectangle getHitbox() {
+        return new Rectangle(
+            x - HITBOX_MARGIN / 2,
+            y - HITBOX_MARGIN / 2,
+            getImage().getWidth(null) + HITBOX_MARGIN,
+            getImage().getHeight(null) + HITBOX_MARGIN
+        );
     }
-    @Override
-    public int getY() {
-        return y - 50; // expand hitbox up
-    }
-    public int getWidth() {
-        return getImage().getWidth(null) + 40; // expand width
-    }
-    public int getHeight() {
-        return getImage().getHeight(null) + 40; // expand height
-    }
-} 
+}
