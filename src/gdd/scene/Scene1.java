@@ -117,6 +117,7 @@ public class Scene1 extends JPanel {
     private void loadSpawnDetails() {
         // TODO load this from a file
         spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
+        spawnMap.put(120, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
 
         for (int i = 0; i < 10; i++) {
             spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
@@ -424,6 +425,10 @@ public class Scene1 extends JPanel {
                     // Enemy enemy2 = new Alien2(sd.x, sd.y);
                     // enemies.add(enemy2);
                     break;
+                case "BossEnemy":
+                    Enemy boss = new gdd.sprite.BossEnemy(sd.x, sd.y);
+                    enemies.add(boss);
+                    break;
                 case "PowerUp-SpeedUp":
                     // Handle speed up item spawn
                     PowerUp speedUp = new SpeedUp(sd.x, sd.y);
@@ -458,6 +463,27 @@ public class Scene1 extends JPanel {
         for (Enemy enemy : enemies) {
             if (enemy.isVisible()) {
                 enemy.act(direction);
+                if (enemy instanceof gdd.sprite.BossEnemy) {
+                    gdd.sprite.BossEnemy boss = (gdd.sprite.BossEnemy) enemy;
+                    if (boss.canShoot()) {
+                        shots.add(boss.createShot());
+                        boss.resetShootCooldown();
+                    }
+                }
+                // Player-enemy collision
+                int playerX = player.getX();
+                int playerY = player.getY();
+                int enemyX = enemy.getX();
+                int enemyY = enemy.getY();
+                if (player.isVisible()
+                    && playerX < enemyX + ALIEN_WIDTH
+                    && playerX + PLAYER_WIDTH > enemyX
+                    && playerY < enemyY + ALIEN_HEIGHT
+                    && playerY + PLAYER_HEIGHT > enemyY) {
+                    var ii = new ImageIcon(IMG_EXPLOSION);
+                    player.setImage(ii.getImage());
+                    player.setDying(true);
+                }
             }
         }
 
@@ -466,6 +492,7 @@ public class Scene1 extends JPanel {
         for (Shot shot : shots) {
 
             if (shot.isVisible()) {
+                shot.act();
                 int shotX = shot.getX();
                 int shotY = shot.getY();
 
@@ -474,17 +501,24 @@ public class Scene1 extends JPanel {
                     int enemyX = enemy.getX();
                     int enemyY = enemy.getY();
 
-                    if (enemy.isVisible() && shot.isVisible()
-                            && shotX >= (enemyX)
-                            && shotX <= (enemyX + ALIEN_WIDTH)
-                            && shotY >= (enemyY)
-                            && shotY <= (enemyY + ALIEN_HEIGHT)) {
-
+                    if (shot.getDirection() == -1 && enemy.isVisible() && shot.isVisible()
+                        && shotX >= (enemyX)
+                        && shotX <= (enemyX + ALIEN_WIDTH)
+                        && shotY >= (enemyY)
+                        && shotY <= (enemyY + ALIEN_HEIGHT)) {
                         var ii = new ImageIcon(IMG_EXPLOSION);
                         enemy.setImage(ii.getImage());
-                        enemy.setDying(true);
-                        explosions.add(new Explosion(enemyX, enemyY));
-                        deaths++;
+                        if (enemy instanceof gdd.sprite.BossEnemy) {
+                            ((gdd.sprite.BossEnemy)enemy).takeDamage(1);
+                            if (enemy.isDying()) {
+                                explosions.add(new Explosion(enemyX, enemyY));
+                                deaths++;
+                            }
+                        } else {
+                            enemy.setDying(true);
+                            explosions.add(new Explosion(enemyX, enemyY));
+                            deaths++;
+                        }
                         shot.die();
                         shotsToRemove.add(shot);
                     }
@@ -492,13 +526,28 @@ public class Scene1 extends JPanel {
 
                 int y = shot.getY();
                 // y -= 4;
-                y -= 20;
-
-                if (y < 0) {
+                // Remove shot if out of bounds
+                if (shot.getDirection() == -1 && y < 0) {
                     shot.die();
                     shotsToRemove.add(shot);
-                } else {
-                    shot.setY(y);
+                } else if (shot.getDirection() == 1 && y > BOARD_HEIGHT) {
+                    shot.die();
+                    shotsToRemove.add(shot);
+                } else if (shot.getDirection() == 1) {
+                    // Boss shot: check collision with player
+                    int playerX = player.getX();
+                    int playerY = player.getY();
+                    if (player.isVisible()
+                        && shotX >= playerX
+                        && shotX <= playerX + PLAYER_WIDTH
+                        && shotY >= playerY
+                        && shotY <= playerY + PLAYER_HEIGHT) {
+                        var ii = new ImageIcon(IMG_EXPLOSION);
+                        player.setImage(ii.getImage());
+                        player.setDying(true);
+                        shot.die();
+                        shotsToRemove.add(shot);
+                    }
                 }
             }
         }

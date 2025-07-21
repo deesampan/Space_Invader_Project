@@ -31,6 +31,7 @@ public class Global {
     // Images
     public static final String IMG_ENEMY = "src/images/ufo.png";
     public static final String IMG_ENEMY_2 = "src/images/ufo_2.png";
+    public static final String IMG_ENEMY_BOSS = "src/images/aircraft.png";
     public static final String IMG_PLAYER = "src/images/space-ship2.png";
     public static final String IMG_PLAYER_2 = "src/images/space-ship2run.png";
     public static final String IMG_SHOT = "src/images/shot.png";
