@@ -97,6 +97,8 @@ public class Scene1 extends JPanel {
 
     private static final int FADE_START_FRAME_2 = 1000;
 
+    private int bossWinTimer = -1;
+
     public Scene1(Game game) {
         this.game = game;
         // initBoard();
@@ -119,26 +121,26 @@ public class Scene1 extends JPanel {
         spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
         spawnMap.put(120, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
 
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
-        }
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
-        }
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(300 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
-        }
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
-        }
+        // for (int i = 0; i < 10; i++) {
+        //     spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        // }
+        // for (int i = 0; i < 10; i++) {
+        //     spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        // }
+        // for (int i = 0; i < 10; i++) {
+        //     spawnMap.put(300 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        // }
+        // for (int i = 0; i < 10; i++) {
+        //     spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        // }
 
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.err.println(j);
-                spawnMap.put(600+ (i*40) + j, new SpawnDetails("Alien1", 100 + (j * 60), 0));
-            }
-        }
+        // for (int i = 0; i < 6; i++) {
+        //     for (int j = 0; j < 10; j++) {
+        //         System.err.println(j);
+        //         spawnMap.put(600+ (i*40) + j, new SpawnDetails("Alien1", 100 + (j * 60), 0));
+        //     }
+        // }
     }
 
     private void initBoard() {
@@ -450,14 +452,19 @@ public class Scene1 extends JPanel {
         player.act();
 
         // Power-ups
+        List<PowerUp> powerupsToRemove = new ArrayList<>();
         for (PowerUp powerup : powerups) {
             if (powerup.isVisible()) {
                 powerup.act();
                 if (powerup.collidesWith(player)) {
                     powerup.upgrade(player);
+                    powerupsToRemove.add(powerup);
                 }
+            } else {
+                powerupsToRemove.add(powerup);
             }
         }
+        powerups.removeAll(powerupsToRemove);
 
         // Enemies
         for (Enemy enemy : enemies) {
@@ -552,6 +559,25 @@ public class Scene1 extends JPanel {
             }
         }
         shots.removeAll(shotsToRemove);
+
+        // Check if boss is defeated for game win
+        boolean bossDefeated = false;
+        for (Enemy enemy : enemies) {
+            if (enemy instanceof gdd.sprite.BossEnemy && enemy.isDying()) {
+                bossDefeated = true;
+            }
+        }
+        if (bossDefeated && bossWinTimer < 0) {
+            bossWinTimer = 100; // 5 seconds at 60 FPS
+        }
+        if (bossWinTimer >= 0) {
+            bossWinTimer--;
+            if (bossWinTimer == 0) {
+                inGame = false;
+                timer.stop();
+                message = "Game won!";
+            }
+        }
 
         // enemies
         // for (Enemy enemy : enemies) {

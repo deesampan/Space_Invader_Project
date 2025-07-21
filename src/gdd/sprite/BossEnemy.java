@@ -24,6 +24,10 @@ public class BossEnemy extends Enemy {
             ii.getIconHeight() * SCALE_FACTOR * 2,
             java.awt.Image.SCALE_SMOOTH);
         setImage(scaledImage);
+
+
+        this.x = x - (scaledImage.getWidth(null) / 2);
+        this.y = y - (scaledImage.getHeight(null) / 2);
     }
 
     @Override
@@ -67,5 +71,20 @@ public class BossEnemy extends Enemy {
 
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public int getX() {
+        return x - 50; // expand hitbox left
+    }
+    @Override
+    public int getY() {
+        return y - 50; // expand hitbox up
+    }
+    public int getWidth() {
+        return getImage().getWidth(null) + 40; // expand width
+    }
+    public int getHeight() {
+        return getImage().getHeight(null) + 40; // expand height
     }
 } 

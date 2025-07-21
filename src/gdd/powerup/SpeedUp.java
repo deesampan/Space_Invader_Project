@@ -16,10 +16,13 @@ public class SpeedUp extends PowerUp {
         super(x, y);
         // Set image
         ImageIcon ii = new ImageIcon(IMG_POWERUP_SPEEDUP);
-        var scaledImage = ii.getImage().getScaledInstance(ii.getIconWidth() ,
-                ii.getIconHeight() ,
+        var scaledImage = ii.getImage().getScaledInstance(ii.getIconWidth() * 1,
+                ii.getIconHeight() * 1,
                 java.awt.Image.SCALE_SMOOTH);
         setImage(scaledImage);
+        // Center the power-up horizontally
+        this.x = x - (scaledImage.getWidth(null) / 2);
+        this.y = y - (scaledImage.getHeight(null) / 2);
     }
 
     public void act() {
