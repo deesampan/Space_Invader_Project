@@ -11,6 +11,7 @@ import gdd.sprite.Enemy;
 import gdd.sprite.Explosion;
 import gdd.sprite.Player;
 import gdd.sprite.Shot;
+import gdd.sprite.ZigZagEnemy;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -119,7 +120,8 @@ public class Scene1 extends JPanel {
     private void loadSpawnDetails() {
         // TODO load this from a file
         spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
-        spawnMap.put(120, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        // spawnMap.put(120, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        spawnMap.put(100, new SpawnDetails("ZigZagEnemy", 200, 0)); // ZigZagEnemy spawns at frame 160
 
         // for (int i = 0; i < 10; i++) {
         //     spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
@@ -421,6 +423,10 @@ public class Scene1 extends JPanel {
                 case "Alien1":
                     Enemy enemy = new Alien1(sd.x, sd.y);
                     enemies.add(enemy);
+                    break;
+                case "ZigZagEnemy":
+                    Enemy zigzag = new ZigZagEnemy(sd.x, sd.y);
+                    enemies.add(zigzag);
                     break;
                 // Add more cases for different enemy types if needed
                 case "Alien2":
