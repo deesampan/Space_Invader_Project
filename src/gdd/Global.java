@@ -22,7 +22,7 @@ public class Global {
     public static final int ALIEN_GAP = 30; // Gap between aliens
 
     public static final int GO_DOWN = 30; // Doubled from 15
-    public static final int NUMBER_OF_ALIENS_TO_DESTROY = 100;
+    public static final int NUMBER_OF_ALIENS_TO_DESTROY = 9999;
     public static final int CHANCE = 5;
     public static final int DELAY = 17;
     public static final int PLAYER_WIDTH = 30; // Doubled from 15
@@ -34,6 +34,7 @@ public class Global {
     public static final String IMG_ENEMY_RED = "src/images/red.png";
     public static final String IMG_ENEMY_RED_2 = "src/images/red_2.png";
     public static final String IMG_ENEMY_BOSS = "src/images/aircraft.png";
+    public static final String IMG_ENEMY_BOSS_2 = "src/images/aircraft_2.png";
     public static final String IMG_PLAYER = "src/images/space-ship2.png";
     public static final String IMG_PLAYER_2 = "src/images/space-ship2run.png";
     public static final String IMG_SHOT = "src/images/shot.png";

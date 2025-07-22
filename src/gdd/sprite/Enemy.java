@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Enemy extends Sprite {
 
-    // private Bomb bomb;
+    private Bomb bomb;
 
     private int animationFrame = 0;
     private static final int ANIMATION_SPEED = 10; // frames per image
@@ -20,7 +20,7 @@ public class Enemy extends Sprite {
         this.x = x;
         this.y = y;
 
-        // bomb = new Bomb(x, y);
+        bomb = new Bomb(x, y);
 
         var ii = new ImageIcon(IMG_ENEMY);
 
@@ -55,7 +55,7 @@ public class Enemy extends Sprite {
             setEnemyImage(IMG_ENEMY_2);
         }
     }
-/* 
+
     public Bomb getBomb() {
 
         return bomb;
@@ -92,5 +92,5 @@ public class Enemy extends Sprite {
             return destroyed;
         }
     }
-*/
+
 }

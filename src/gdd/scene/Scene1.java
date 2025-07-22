@@ -7,6 +7,7 @@ import gdd.SpawnDetails;
 import gdd.powerup.PowerUp;
 import gdd.powerup.SpeedUp;
 import gdd.sprite.Alien1;
+import gdd.sprite.BossEnemy;
 import gdd.sprite.Enemy;
 import gdd.sprite.Explosion;
 import gdd.sprite.Player;
@@ -92,9 +93,9 @@ public class Scene1 extends JPanel {
     private int lastRowToShow;
     private int firstRowToShow;
 
-    private static final int FADE_START_FRAME = 600;
+    private static final int FADE_START_FRAME = 3000;
     private static final int FADE_DURATION_FRAMES = 120; // black to white
-    private static final int RED_FADE_START_FRAME = 1000;
+    private static final int RED_FADE_START_FRAME = 6000;
     private static final int RED_FADE_DURATION_FRAMES = 120; // white to red
 
     private static final int FADE_START_FRAME_2 = 1000;
@@ -124,11 +125,11 @@ public class Scene1 extends JPanel {
     private void loadSpawnDetails() {
         // TODO load this from a file
         spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
-        spawnMap.put(60, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        // spawnMap.put(10, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
         // spawnMap.put(100, new SpawnDetails("ZigZagEnemy", 200, 0)); // ZigZagEnemy spawns at frame 160
 
         // for (int i = 0; i < 10; i++) {
-        //     spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        //     spawnMap.put(100 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
         // }
         // for (int i = 0; i < 10; i++) {
         //     spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
@@ -257,20 +258,23 @@ public class Scene1 extends JPanel {
     }
 
     private void drawAliens(Graphics g) {
-
         for (Enemy enemy : enemies) {
-
+    
             if (enemy.isVisible()) {
-
-                g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+                if (enemy instanceof BossEnemy) {
+                    // Shift boss image to the left by 20 pixels
+                    g.drawImage(enemy.getImage(), enemy.getX() - 20, enemy.getY(), this);
+                } else {
+                    g.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), this);
+                }
             }
-
+    
             if (enemy.isDying()) {
-
                 enemy.die();
             }
         }
     }
+    
 
     private void drawPowreUps(Graphics g) {
 
@@ -543,6 +547,7 @@ public class Scene1 extends JPanel {
                         shotsToRemove.add(shot);
                     }
                 }
+                
 
                 int y = shot.getY();
                 // y -= 4;

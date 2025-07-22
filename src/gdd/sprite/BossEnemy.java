@@ -4,6 +4,8 @@ import static gdd.Global.*;
 import static gdd.Global.BOARD_WIDTH;
 import javax.swing.ImageIcon;
 import java.awt.Rectangle;
+import java.awt.Graphics;
+
 
 public class BossEnemy extends Enemy {
     private int health;
@@ -16,15 +18,15 @@ public class BossEnemy extends Enemy {
     private int spawnX, spawnY; // Store initial spawn for correct image placement
 
     public BossEnemy(int x, int y) {
-        super(x, y);
+        super(x - 200, y);
         this.health = 3; // Boss has 3 HP
         this.spawnX = x;
         this.spawnY = y;
-        setBossImage();
+        setBossImage(IMG_ENEMY_BOSS);
     }
 
-    private void setBossImage() {
-        var ii = new ImageIcon(IMG_ENEMY_BOSS); // Use ufo_2.png for boss
+    private void setBossImage(String imgPath) {
+        var ii = new ImageIcon(imgPath); // Use ufo_2.png for boss
         var scaledImage = ii.getImage().getScaledInstance(
             ii.getIconWidth() * SCALE_FACTOR * 2, // Boss is bigger
             ii.getIconHeight() * SCALE_FACTOR * 2,
@@ -46,7 +48,11 @@ public class BossEnemy extends Enemy {
 
         // Animate boss spaceship
         animationFrame = (animationFrame + 1) % (ANIMATION_SPEED * 2);
-        setBossImage();
+        if (animationFrame < ANIMATION_SPEED) {
+            setBossImage(IMG_ENEMY_BOSS);
+        } else {
+            setBossImage(IMG_ENEMY_BOSS_2);
+        }
 
         // Handle shooting cooldown
         if (shootCooldown > 0) shootCooldown--;
@@ -78,13 +84,18 @@ public class BossEnemy extends Enemy {
         return health;
     }
 
-    // ✅ NEW hitbox method (use this for collision detection)
     public Rectangle getHitbox() {
-        return new Rectangle(
-            x - HITBOX_MARGIN / 2,
-            y - HITBOX_MARGIN / 2,
-            getImage().getWidth(null) + HITBOX_MARGIN,
-            getImage().getHeight(null) + HITBOX_MARGIN
-        );
+        int imgWidth = getImage().getWidth(null);
+        int imgHeight = getImage().getHeight(null);
+        int hitboxWidth = imgWidth + HITBOX_MARGIN;
+        int hitboxHeight = imgHeight + HITBOX_MARGIN;
+
+        // Center the hitbox around the boss image
+        int hitboxX = x - (hitboxWidth - imgWidth) / 2;
+        int hitboxY = y - (hitboxHeight - imgHeight) / 2;
+
+        return new Rectangle(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
     }
+
+
 }
