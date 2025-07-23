@@ -126,34 +126,90 @@ public class Scene1 extends JPanel {
         // TODO load this from a file
         // spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
 
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
-        }
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
-        }
-        for (int i = 0; i < 10; i++) {
+        // for(int k = 1; k < 50; k++){
+        //     for (int i = 0; i < 10; i++) {
+        //         if(k % 2 == 0){
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        //         }else{
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        //         }
+        //     }
+        // }
+
+        // for(int k = 51; k < 100; k++){
+        //     for (int i = 0; i < 10; i++) {
+        //         if(i % 2 == 0){
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        //         }else{
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        //         }
+        //     }
+        // }
 
 
-            spawnMap.put(300 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
-        }
-        for (int i = 0; i < 10; i++) {
-            spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
-        }
+        // for(int k = 101; k < 150; k++){
+        //     for (int i = 0; i < 10; i++) {
+        //         if(k % 2 == 0){
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 100 + (i * 60), 0));
+        //         }else{
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 600 - (i * 60), 0));
+        //         }
+        //     }
+        // }
+
+        // for(int k = 151; k < 200; k++){
+        //     for (int i = 0; i < 10; i++) {
+        //         if(i % 2 == 0){
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 100 + (i * 60), 0));
+        //         }else{
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 600 - (i * 60), 0));
+        //         }
+        //     }
+        // }
 
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.err.println(j);
-                spawnMap.put(600+ (i*40) + j, new SpawnDetails("ZigZagEnemy", 100 + (j * 60), 0));
+
+
+        // spawnMap.put(20020, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        // for(int k = 201; k < 300; k++){
+        //     for (int i = 0; i < 10; i++) {
+        //         if(i % 2 == 0){
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 100 + (i * 60), 0));
+        //         }else{
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 600 - (i * 60), 0));
+        //         }
+        //     }
+        // }
+        // for(int k = 201; k < 300; k++){
+        //     for (int i = 0; i < 10; i++) {
+        //         if(i % 2 == 0){
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        //         }else{
+        //             spawnMap.put((k * 100) +(i*3) , new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        //         }
+        //     }
+        // }
+
+
+        spawnMap.put(120, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        for(int k = 1; k < 100; k++){
+            for (int i = 0; i < 10; i++) {
+                if(i % 2 == 0){
+                    spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 100 + (i * 60), -100));
+                }else{
+                    spawnMap.put((k * 100) +(i*3) , new SpawnDetails("ZigZagEnemy", 600 - (i * 60), -100));
+                }
             }
         }
-
-        // spawnMap.put(100, new SpawnDetails("ZigZagEnemy", 200, 0)); // ZigZagEnemy spawns at frame 160
-
-
-
-        spawnMap.put(20020, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        for(int k = 1; k < 100; k++){
+            for (int i = 0; i < 10; i++) {
+                if(i % 2 == 0){
+                    spawnMap.put((k * 101) +(i*3) , new SpawnDetails("Alien1", 100 + (i * 60), -100));
+                }else{
+                    spawnMap.put((k * 101) +(i*3) , new SpawnDetails("Alien1", 600 - (i * 60), -100));
+                }
+            }
+        }
     }
 
     private void initBoard() {

@@ -45,6 +45,11 @@ public class ZigZagEnemy extends Enemy {
         // Animate zigzag enemy
         animationFrame = (animationFrame + 1) % (ANIMATION_SPEED * 2);
         setZigZagEnemyImage();
+
+
+        if (this.y >= 700){
+            this.setDying(true);
+        }
     }
 
     @Override

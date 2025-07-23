@@ -54,6 +54,10 @@ public class Enemy extends Sprite {
         } else {
             setEnemyImage(IMG_ENEMY_2);
         }
+
+        if (this.y >= 700){
+            this.setDying(true);
+        }
     }
 
     public Bomb getBomb() {
