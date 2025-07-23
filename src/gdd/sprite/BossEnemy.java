@@ -13,7 +13,7 @@ public class BossEnemy extends Enemy {
     private static final int ANIMATION_SPEED = 20; // slower animation
     private int direction = 1; // 1 for right, -1 for left
     private int shootCooldown = 0;
-    private static final int SHOOT_INTERVAL = 40; // frames between shots
+    private static final int SHOOT_INTERVAL = 30; // frames between shots
     private static final int HITBOX_MARGIN = 40; // Amount to expand hitbox (centered)
     private int spawnX, spawnY; // Store initial spawn for correct image placement
 
