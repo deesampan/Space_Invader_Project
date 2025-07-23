@@ -93,9 +93,9 @@ public class Scene1 extends JPanel {
     private int lastRowToShow;
     private int firstRowToShow;
 
-    private static final int FADE_START_FRAME = 3000;
+    private static final int FADE_START_FRAME = 10000;
     private static final int FADE_DURATION_FRAMES = 120; // black to white
-    private static final int RED_FADE_START_FRAME = 6000;
+    private static final int RED_FADE_START_FRAME = 20000;
     private static final int RED_FADE_DURATION_FRAMES = 120; // white to red
 
     private static final int FADE_START_FRAME_2 = 1000;
@@ -124,30 +124,36 @@ public class Scene1 extends JPanel {
 
     private void loadSpawnDetails() {
         // TODO load this from a file
-        spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
-        // spawnMap.put(10, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
+        // spawnMap.put(50, new SpawnDetails("PowerUp-SpeedUp", 100, 0));
+
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(200 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        }
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        }
+        for (int i = 0; i < 10; i++) {
+
+
+            spawnMap.put(300 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
+        }
+        for (int i = 0; i < 10; i++) {
+            spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
+        }
+
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.err.println(j);
+                spawnMap.put(600+ (i*40) + j, new SpawnDetails("ZigZagEnemy", 100 + (j * 60), 0));
+            }
+        }
+
         // spawnMap.put(100, new SpawnDetails("ZigZagEnemy", 200, 0)); // ZigZagEnemy spawns at frame 160
 
-        // for (int i = 0; i < 10; i++) {
-        //     spawnMap.put(100 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
-        // }
-        // for (int i = 0; i < 10; i++) {
-        //     spawnMap.put(250+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
-        // }
-        // for (int i = 0; i < 10; i++) {
-        //     spawnMap.put(300 + (i*3), new SpawnDetails("Alien1", 100 + (i * 60), 0));
-        // }
-        // for (int i = 0; i < 10; i++) {
-        //     spawnMap.put(350+ (i*3), new SpawnDetails("Alien1", 600 - (i * 60), 0));
-        // }
 
 
-        // for (int i = 0; i < 6; i++) {
-        //     for (int j = 0; j < 10; j++) {
-        //         System.err.println(j);
-        //         spawnMap.put(600+ (i*40) + j, new SpawnDetails("Alien1", 100 + (j * 60), 0));
-        //     }
-        // }
+        spawnMap.put(20020, new SpawnDetails("BossEnemy", 250, 50)); // Boss spawns at frame 120
     }
 
     private void initBoard() {

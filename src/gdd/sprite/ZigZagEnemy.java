@@ -34,7 +34,7 @@ public class ZigZagEnemy extends Enemy {
     @Override
     public void act(int direction) {
         // Move down as usual
-        this.y += 1;
+        this.y += 3;
         // Zig-zag left and right
         this.x += zigzagDirection * 2; // speed of zig-zag
         zigzagStep += Math.abs(zigzagDirection * 2);
