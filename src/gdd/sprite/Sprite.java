@@ -20,13 +20,32 @@ abstract public class Sprite {
     abstract public void act();
 
     public boolean collidesWith(Sprite other) {
+        // if (other == null || !this.isVisible() || !other.isVisible()) {
+        // return false;
+        // }
+        // return this.getX() < other.getX() + other.getImage().getWidth(null)
+        // && this.getX() + this.getImage().getWidth(null) > other.getX()
+        // && this.getY() < other.getY() + other.getImage().getHeight(null)
+        // && this.getY() + this.getImage().getHeight(null) > other.getY();
         if (other == null || !this.isVisible() || !other.isVisible()) {
             return false;
         }
-        return this.getX() < other.getX() + other.getImage().getWidth(null)
-                && this.getX() + this.getImage().getWidth(null) > other.getX()
-                && this.getY() < other.getY() + other.getImage().getHeight(null)
-                && this.getY() + this.getImage().getHeight(null) > other.getY();
+        int margin = 5; // expand hitbox by 10 pixels on each side
+
+        int thisLeft = this.getX() - margin;
+        int thisRight = this.getX() + this.getImage().getWidth(null) + margin;
+        int thisTop = this.getY() - margin;
+        int thisBottom = this.getY() + this.getImage().getHeight(null) + margin;
+
+        int otherLeft = other.getX() - margin;
+        int otherRight = other.getX() + other.getImage().getWidth(null) + margin;
+        int otherTop = other.getY() - margin;
+        int otherBottom = other.getY() + other.getImage().getHeight(null) + margin;
+
+        return thisLeft < otherRight
+                && thisRight > otherLeft
+                && thisTop < otherBottom
+                && thisBottom > otherTop;
     }
 
     public void die() {

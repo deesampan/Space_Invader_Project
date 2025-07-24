@@ -11,8 +11,9 @@ public class Player extends Sprite {
     private static final int START_Y = 540;
     private int width;
     private int currentSpeed = 2;
+    private int shotLevel = 1;
 
-    private Rectangle bounds = new Rectangle(175,135,17,32);
+    private Rectangle bounds = new Rectangle(175, 135, 17, 32);
 
     private int animationFrame = 0;
     private static final int ANIMATION_SPEED = 10; // frames per image
@@ -45,6 +46,17 @@ public class Player extends Sprite {
         }
         this.currentSpeed = speed;
         return currentSpeed;
+    }
+
+    public int getShotLevel() {
+        return shotLevel;
+    }
+
+    public void setShotLevel(int shotLevel) {
+        if (shotLevel < 1) {
+            shotLevel = 1; // Ensure shot level is at least 1
+        }
+        this.shotLevel = shotLevel;
     }
 
     @Override
