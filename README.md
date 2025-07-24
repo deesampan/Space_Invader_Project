@@ -1,4 +1,4 @@
-# Space_Invader_Project🚀
+# Space Invader Project🚀
 
 ## Team Members💗
 1. Deesampan V. 6510766 
