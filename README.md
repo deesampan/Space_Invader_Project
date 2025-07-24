@@ -15,4 +15,5 @@ Our game is **Space Invader** but clone in our own style, named "**The Stellar L
   - Collect score by shoot enemy through the game
 - Level Design
   - Game has 3 stages, the first 2 stages require at least 5 minute for playing
-  - There's
+  - There's 3 types of enemy
+    - Normal Enemy (Only stri)
