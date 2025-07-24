@@ -1,19 +1,21 @@
-# Space_Invader_Project
+# Space_Invader_Project🚀
 
-## Team Members
+## Team Members💗
 1. Deesampan V. 6510766 
 2. Kasidis C. 6510348
 3. Jilamika L. 6511063
 
 
-## Game & Level Design
+## Game & Level Design🎨
 Our game is **Space Invader** but clone in our own style, named "**The Stellar League**".
-- Gameplay
+- Gameplay🎮
   - A,D keys for moving left and right
   - Spacebar for shooting the bullet
-  - Our main goal for winning is to **Defeat the last boss**
+  - Our main goal for winning is **Defeat the last boss**
   - Collect score by shoot enemy through the game
-- Level Design
+- Level Design🎲
   - Game has 3 stages, the first 2 stages require at least 5 minute for playing
   - There's 3 types of enemy
-    - Normal Enemy (Only stri)
+    - Normal Enemy (Only go straight down)
+    - ZigZag Enemy (It has its own moving style)
+    - Boss Enemy (Require 3 hit to defeat, also be able to shoot back to player)
