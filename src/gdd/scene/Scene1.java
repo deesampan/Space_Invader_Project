@@ -15,6 +15,7 @@ import gdd.sprite.Player;
 import gdd.sprite.Shot;
 import java.util.Random;
 import gdd.sprite.ZigZagEnemy;
+import gdd.Dashboard.Dashboard;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -47,7 +48,7 @@ public class Scene1 extends JPanel {
     final int BLOCKWIDTH = 50;
 
     final int BLOCKS_TO_DRAW = BOARD_HEIGHT / BLOCKHEIGHT;
-
+    private Dashboard dashboard;
     private int direction = -1;
     private int deaths = 0;
 
@@ -247,6 +248,8 @@ public class Scene1 extends JPanel {
         // }
         player = new Player();
         // shot = new Shot();
+
+        dashboard = new Dashboard(player);
     }
 
     private void drawMap(Graphics g) {
@@ -454,6 +457,10 @@ public class Scene1 extends JPanel {
             drawShot(g);
             // drawSpeedFlasks(g);
 
+            if (dashboard != null) {
+                dashboard.draw(g, BOARD_WIDTH, BOARD_HEIGHT);
+            }
+
         } else {
 
             if (timer.isRunning()) {
@@ -485,6 +492,15 @@ public class Scene1 extends JPanel {
         var fontMetrics = this.getFontMetrics(small);
         g.setFont(small);
         g.drawString(message, (BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2, BOARD_HEIGHT / 2);
+
+        // Draw the score below the message
+        if (dashboard != null) {
+            String scoreText = "Score: " + dashboard.getScore();
+            var scoreFont = new Font("Helvetica", Font.PLAIN, 28);
+            var scoreMetrics = this.getFontMetrics(scoreFont);
+            g.setFont(scoreFont);
+            g.drawString(scoreText, (BOARD_WIDTH - scoreMetrics.stringWidth(scoreText)) / 2, (BOARD_HEIGHT / 2) + 50);
+        }
     }
 
     private void update() {
@@ -607,11 +623,25 @@ public class Scene1 extends JPanel {
                             if (enemy.isDying()) {
                                 explosions.add(new Explosion(enemyX, enemyY));
                                 deaths++;
+
+                                if (dashboard != null) {
+                                    dashboard.addEnemyKillScore("BossEnemy");
+                                }
                             }
                         } else {
                             enemy.setDying(true);
                             explosions.add(new Explosion(enemyX, enemyY));
                             deaths++;
+
+                            if (dashboard != null) {
+                                if (enemy instanceof gdd.sprite.ZigZagEnemy) {
+                                    dashboard.addEnemyKillScore("ZigZagEnemy");
+                                } else if (enemy instanceof gdd.sprite.Alien1) {
+                                    dashboard.addEnemyKillScore("Alien1");
+                                } else {
+                                    dashboard.addEnemyKillScore("Enemy");
+                                }
+                            }
                         }
                         shot.die();
                         shotsToRemove.add(shot);
